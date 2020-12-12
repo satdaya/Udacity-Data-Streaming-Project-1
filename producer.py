@@ -37,9 +37,10 @@ class Producer:
         # and use the Host URL for Kafka and Schema Registry!
         #
         #
+        
         self.broker_properties = {
-            # TODO
-            # TODO
+            "bootstrap.servers": BROKER_URL,
+            "schema_registry.uri": SCHEMA_REGISTRY_URL, 
             # TODO
         }
 
@@ -49,8 +50,17 @@ class Producer:
             Producer.existing_topics.add(self.topic_name)
 
         # TODO: Configure the AvroProducer
-        # self.producer = AvroProducer(
-        # )
+        self.producer = AvroProducer(
+            {
+                self.broker_properties,
+                schema_registry = SCHEMA_REGISTRY_URL,
+                default.key_schema = self.key_schema,
+                default.value_schema = self.value_schema,
+             
+                
+            }
+         )
+
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
